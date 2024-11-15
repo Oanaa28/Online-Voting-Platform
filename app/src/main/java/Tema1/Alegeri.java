@@ -6,7 +6,7 @@ public class Alegeri {
     private String idAlegeri;
     private String numeAlegeri;
     private boolean stagiu;
-//    private ArrayList<Alegeri> alegeri = new ArrayList<Alegeri>();
+
     public Alegeri(String idAlegeri, String numeAlegeri, boolean stagiu) {
         this.idAlegeri = idAlegeri;
         this.numeAlegeri = numeAlegeri;
@@ -63,10 +63,8 @@ public class Alegeri {
                 if (stagiu == false) {
                     System.out.println("Au pornit alegerile " + numeAlegere);
                     a.setStagiu(true);
-                    return;
                 } else {
                     System.out.println("EROARE: Alegerile deja au inceput");
-                    return;
                 }
             }
         }
