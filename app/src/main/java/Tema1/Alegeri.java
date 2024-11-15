@@ -39,7 +39,7 @@ public class Alegeri {
                 return;
             }
         }
-        Alegeri alegereNoua = new Alegeri(idAlegeri, numeAlegeri, true);
+        Alegeri alegereNoua = new Alegeri(idAlegeri, numeAlegeri, false);
         alegeri.add(alegereNoua);
         System.out.println("S-au creat alegerile " + numeAlegeri);
     }
@@ -51,16 +51,23 @@ public class Alegeri {
                 valid = true;
                 numeAlegere = a.getNumeAlegeri();
                 stagiu = a.getStagiu();
+                break;
             }
         }
         if (valid == false) {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
-        } else {
-            if (stagiu == false) {
-                System.out.println("Au pornit alegerile " + numeAlegere);
-                stagiu = true;
-            } else {
-                System.out.println("EROARE: Alegerile deja au inceput");
+            return;
+        }
+        for (Alegeri a : alegeri) {
+            if(a.getIdAlegeri().equals(idAlegeri)) {
+                if (stagiu == false) {
+                    System.out.println("Au pornit alegerile " + numeAlegere);
+                    a.setStagiu(true);
+                    return;
+                } else {
+                    System.out.println("EROARE: Alegerile deja au inceput");
+                    return;
+                }
             }
         }
     }

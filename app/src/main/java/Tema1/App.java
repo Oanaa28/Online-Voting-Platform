@@ -19,6 +19,7 @@ public class App {
         ArrayList<Alegeri> alegeri = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine();
+            System.out.println(input);
             if (input.equals("0")) {
                 String comanda = scanner.nextLine();
                 String id = comanda.split(" ", 2)[0];
@@ -26,9 +27,7 @@ public class App {
                 Alegeri.CreareAlegeri(alegeri, id, nume);
             } else if (input.equals("1")) {
                 String id = scanner.nextLine();
-                Alegeri.PornireAlegeri(alegeri, id);
-
-            }
+                Alegeri.PornireAlegeri(alegeri, id);           }
         }
     }
 
