@@ -802,7 +802,7 @@ public class AppTest {
         App app = new App(in);
         app.run();
         String output = outputStreamCaptor.toString().trim();
-        String expected = "FRAUDa: Votantul cu CNP-ul 1234567891234 a incercat sa comita o frauda. Votul a fost anulat";
+        String expected = "FRAUDA: Votantul cu CNP-ul 1234567891234 a incercat sa comita o frauda. Votul a fost anulat";
         if (output.contains(expected)) {
             assertTrue(true);
         } else {
