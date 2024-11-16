@@ -120,11 +120,11 @@ public class Vot {
                 }
             }
         }
-
         String numeCandidat = "";
         for (Candidat c : candidati) {
             if (c.getCnp().equals(cnpCandidat)) {
                 numeCandidat = c.getNume();
+                //int nrVoturi = c.getVoturiPerCircumscriptie()
                 break;
             }
         }

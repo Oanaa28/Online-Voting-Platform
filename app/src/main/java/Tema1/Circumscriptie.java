@@ -22,6 +22,7 @@ public class Circumscriptie {
     public void setRegiune(String regiune) {
         this.regiune = regiune;
     }
+
     static void CreareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String regiune) {
 
         boolean valid = false;

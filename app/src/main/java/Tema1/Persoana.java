@@ -1,8 +1,11 @@
 package Tema1;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
 
 public abstract class Persoana {
     String cnp;
@@ -37,14 +40,25 @@ public abstract class Persoana {
 }
 
 class Candidat extends Persoana {
-
+    private Map<String, Integer> voturiPerCircumscriptie;
     public Candidat() {
 
     }
-    public Candidat(String cnp, int varsta, String nume) {
+    public Candidat(String cnp, int varsta, String nume, Map<String, Integer> voturiPerCircumscriptie) {
         super(cnp, varsta, nume);
+        this.voturiPerCircumscriptie = voturiPerCircumscriptie;
     }
-    static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri, String cnp, int varsta, String nume) {
+
+    public Map<String, Integer> getVoturiPerCircumscriptie() {
+        return voturiPerCircumscriptie;
+    }
+    public void setVoturiPerCircumscriptie(Map<String, Integer> voturiPerCircumscriptie) {
+        this.voturiPerCircumscriptie = voturiPerCircumscriptie;
+    }
+//    static void VoturiPerCircumscriptie(String numeCircumscriptie, Map<String, Integer> voturiPerCircumscriptie) {
+//
+//    }
+    static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri, String cnp, int varsta, String nume, Map<String, Integer> voturiPerCircumscriptie) {
 
         boolean valid = false;
         int stagiu = 1;
@@ -87,7 +101,7 @@ class Candidat extends Persoana {
         }
 
         if (existaCNP == false) {
-            Candidat candidatNou = new Candidat(cnp, varsta, nume);
+            Candidat candidatNou = new Candidat(cnp, varsta, nume, voturiPerCircumscriptie);
             candidati.add(candidatNou);
             System.out.println("S-a adaugat candidatul " + nume);
         } else {

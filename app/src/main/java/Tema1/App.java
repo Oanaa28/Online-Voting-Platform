@@ -20,6 +20,7 @@ public class App {
         ArrayList<Circumscriptie> circumscriptii = new ArrayList<>();
         ArrayList<Candidat> candidati = new ArrayList<>();
         ArrayList<Votant> votanti = new ArrayList<>();
+        Map<String, Integer> voturiPerCircumscriptie = new HashMap<>();
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine();
             System.out.println(input);
@@ -60,7 +61,7 @@ public class App {
 
                 //System.out.println(id_alegeri + "," + nume + "," + cnp + "," + varstaInt);
 
-                Candidat.AdaugareCandidat(candidati, alegeri, id_alegeri, cnp, varstaInt, nume);
+                Candidat.AdaugareCandidat(candidati, alegeri, id_alegeri, cnp, varstaInt, nume, voturiPerCircumscriptie );
             } else if (input.equals("5")) {
 
                 String comanda = scanner.nextLine();
@@ -111,6 +112,9 @@ public class App {
             } else if (input.equals("11")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 2)[0];
+                String nume_circumscriptie = comanda.split(" ", 2)[1];
+                Raport.CreeazaRaport(circumscriptii, candidati,alegeri, id_alegeri, nume_circumscriptie);
 
             } else if (input.equals("12")) {
 
