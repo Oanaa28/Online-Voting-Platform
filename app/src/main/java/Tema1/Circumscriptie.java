@@ -24,7 +24,8 @@ public class Circumscriptie {
     }
     static void CreareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String regiune) {
 
-        boolean valid = false, stagiu = false;
+        boolean valid = false;
+        int stagiu = 0;
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
                 valid = true;
@@ -36,7 +37,7 @@ public class Circumscriptie {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
-        if (stagiu == false) {
+        if (stagiu == 0) {
             System.out.println("EROARE: Nu este perioada de votare");
             return;
         }
@@ -52,7 +53,8 @@ public class Circumscriptie {
     }
     static void EliminareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie) {
 
-        boolean valid = false, stagiu = false, existaCircumscriptie = false;
+        boolean valid = false, existaCircumscriptie = false;
+        int stagiu = 0;
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
                 valid = true;
@@ -64,15 +66,15 @@ public class Circumscriptie {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
-        if (stagiu == false) {
+        if (stagiu == 0) {
             System.out.println("EROARE: Nu este perioada de votare");
             return;
         }
         Circumscriptie circumscriptieEliminata = null;
-        for (Circumscriptie a : circumscriptii) {
-            if (a.getNumeCircumscriptie().equals(numeCircumscriptie) == true) {
+        for (Circumscriptie c : circumscriptii) {
+            if (c.getNumeCircumscriptie().equals(numeCircumscriptie) == true) {
                 existaCircumscriptie = true;
-                circumscriptieEliminata = a;
+                circumscriptieEliminata = c;
             }
         }
         if (existaCircumscriptie == false) {

@@ -1,6 +1,8 @@
 package Tema1;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public abstract class Persoana {
     String cnp;
@@ -35,6 +37,7 @@ public abstract class Persoana {
 }
 
 class Candidat extends Persoana {
+
     public Candidat() {
 
     }
@@ -43,7 +46,8 @@ class Candidat extends Persoana {
     }
     static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri, String cnp, int varsta, String nume) {
 
-        boolean valid = false, stagiu = false;
+        boolean valid = false;
+        int stagiu = 1;
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
                 stagiu = a.getStagiu();
@@ -57,7 +61,7 @@ class Candidat extends Persoana {
             return;
         }
 
-        if (stagiu == false) {
+        if (stagiu == 0) {
             System.out.println("EROARE: Nu este perioada de votare");
             return;
         }
@@ -92,7 +96,8 @@ class Candidat extends Persoana {
         }
     }
     static void EliminareCandidat (ArrayList<Alegeri> alegeri, ArrayList<Candidat> candidati, String idAlegeri, String cnp) {
-        boolean valid = false, stagiu = false;
+        boolean valid = false;
+        int stagiu = 0;
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
                 valid = true;
@@ -105,7 +110,7 @@ class Candidat extends Persoana {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
-        if (stagiu == false) {
+        if (stagiu == 0) {
             System.out.println("EROARE: Nu este perioada de votare");
         }
 
@@ -126,6 +131,177 @@ class Candidat extends Persoana {
             candidati.remove(candidatEliminat);
             System.out.println("S-a sters candidatul " + candidatEliminat.getNume());
             return;
+        }
+    }
+    static void ListareCandidati (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri) {
+        boolean valid = false;
+        int stagiu = 0;
+        for (Alegeri a : alegeri) {
+            if (a.getIdAlegeri().equals(idAlegeri)) {
+                valid = true;
+                stagiu = a.getStagiu();
+                break;
+            }
+        }
+
+        if (valid == false) {
+            System.out.println("EROARE: Nu exista alegeri cu acest id");
+            return;
+        }
+
+        if (stagiu != 1 && stagiu != 2) {
+            System.out.println("EROARE: Inca nu au inceput alegerile");
+            return;
+        }
+
+        if (candidati.isEmpty()) {
+            System.out.println("GOL: Nu sunt candidati");
+            return;
+        }
+
+        Collections.sort(candidati, new Comparator<Candidat>() {
+            public int compare(Candidat c1, Candidat c2) {
+                return c1.getCnp().compareTo(c2.getCnp());
+            }
+        });
+        System.out.println("Candidatii:");
+        for (Candidat c : candidati) {
+            System.out.println(c.getNume() + " " + c.getCnp() + " " + c.getVarsta());
+        }
+    }
+}
+
+class Votant extends Persoana {
+
+    String circumscriptieVotant;
+
+    public void setCircumscriptieVotant(String circumscriptieVotant) {
+        this.circumscriptieVotant = circumscriptieVotant;
+    }
+
+    public String getCircumscriptieVotant() {
+        return circumscriptieVotant;
+    }
+
+    public Votant() {
+
+    }
+    public Votant(String cnp, int varsta, String nume, String circumscriptieVotant) {
+        super(cnp, varsta, nume);
+        this.circumscriptieVotant = circumscriptieVotant;
+    }
+
+    static void AdaugareVotant (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String cnp, int varsta, boolean indemanare, String nume ) {
+        boolean valid = false;
+        int stagiu = 0;
+        for (Alegeri a : alegeri) {
+            if (a.getIdAlegeri().equals(idAlegeri)) {
+                valid = true;
+                stagiu = a.getStagiu();
+                break;
+            }
+        }
+        if (valid == false) {
+            System.out.println("EROARE: Nu exista alegeri cu acest id");
+            return;
+        }
+        if (stagiu == 0) {
+            System.out.println("EROARE: Nu este perioada de votare");
+        }
+        boolean existaCircumscriptie = false;
+        for (Circumscriptie c : circumscriptii) {
+            if (c.getNumeCircumscriptie().equals(numeCircumscriptie)) {
+                existaCircumscriptie = true;
+                break;
+            }
+        }
+        if (existaCircumscriptie == false) {
+            System.out.println("EROARE: Nu exista o circumscriptie cu numele " + numeCircumscriptie);
+            return;
+        }
+        if (varsta < 18) {
+            System.out.println("EROARE: Varsta invalida");
+        }
+
+        if (cnp.length() != 13) {
+            System.out.println("EROARE: CNP invalid");
+            return;
+        }
+
+        String numeGasit = "";
+        boolean existaCNP = false;
+        for (Votant v : votanti) {
+            if (v.getCnp().equals(cnp)) {
+                existaCNP = true;
+                numeGasit = v.getNume();
+                break;
+            }
+        }
+
+        if (existaCNP == true) {
+            System.out.println("EROARE: Votantul " + numeGasit + " are deja acelasi CNP");
+            return;
+        }
+
+        Votant votantNou = new Votant(cnp, varsta, nume, numeCircumscriptie);
+        votanti.add(votantNou);
+        System.out.println("S-a adaugat votantul " + nume);
+    }
+    static void ListareVotantiCircumscriptie (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie) {
+        boolean valid = false;
+        int stagiu = 0;
+        for (Alegeri a : alegeri) {
+            if (a.getIdAlegeri().equals(idAlegeri)) {
+                valid = true;
+                stagiu = a.getStagiu();
+                break;
+            }
+        }
+
+        if (valid == false) {
+            System.out.println("EROARE: Nu exista alegeri cu acest id");
+            return;
+        }
+
+        if (stagiu != 1 && stagiu != 2) {
+            System.out.println("EROARE: Inca nu au inceput alegerile");
+            return;
+        }
+        boolean existaCircumscriptie = false;
+        for (Circumscriptie c : circumscriptii) {
+            if(c.getNumeCircumscriptie().equals(numeCircumscriptie)) {
+                existaCircumscriptie = true;
+            }
+        }
+        if (existaCircumscriptie == false) {
+            System.out.println("EROARE: Nu exista o circumscriptie cu numele " + numeCircumscriptie);
+            return;
+        }
+
+        ArrayList<Votant> votantiCircumscriptie = new ArrayList<Votant>();
+
+        boolean existaVotanti = false;
+
+        for (Votant v : votanti) {
+            if (v.getCircumscriptieVotant().equals(numeCircumscriptie)) {
+                votantiCircumscriptie.add(v);
+                existaVotanti = true;
+            }
+        }
+
+        if (existaVotanti == false) {
+            System.out.println("GOL: Nu sunt votanti in " + numeCircumscriptie);
+            return;
+        }
+
+        Collections.sort(votantiCircumscriptie, new Comparator<Votant>() {
+            public int compare(Votant v1, Votant v2) {
+                return v1.getCnp().compareTo(v2.getCnp());
+            }
+        });
+        System.out.println("Votantii din " + numeCircumscriptie + ":");
+        for (Votant v : votantiCircumscriptie) {
+            System.out.println(v.getNume() + " " + v.getCnp() + " " + v.getVarsta());
         }
     }
 }

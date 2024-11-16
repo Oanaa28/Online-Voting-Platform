@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Alegeri {
     private String idAlegeri;
     private String numeAlegeri;
-    private boolean stagiu;
+    private int stagiu;
 
-    public Alegeri(String idAlegeri, String numeAlegeri, boolean stagiu) {
+    public Alegeri(String idAlegeri, String numeAlegeri, int stagiu) {
         this.idAlegeri = idAlegeri;
         this.numeAlegeri = numeAlegeri;
         this.stagiu = stagiu;
@@ -24,10 +24,10 @@ public class Alegeri {
     void setNumeAlegeri(String numeAlegeri) {
         this.numeAlegeri = numeAlegeri;
     }
-    boolean getStagiu() {
+    int getStagiu() {
         return stagiu;
     }
-    void setStagiu(boolean stagiu) {
+    void setStagiu(int stagiu) {
         this.stagiu = stagiu;
     }
 
@@ -39,12 +39,13 @@ public class Alegeri {
                 return;
             }
         }
-        Alegeri alegereNoua = new Alegeri(idAlegeri, numeAlegeri, false);
+        Alegeri alegereNoua = new Alegeri(idAlegeri, numeAlegeri, 0);
         alegeri.add(alegereNoua);
         System.out.println("S-au creat alegerile " + numeAlegeri);
     }
     static void PornireAlegeri (ArrayList<Alegeri> alegeri, String idAlegeri) {
-        boolean stagiu = false, valid = false;
+        boolean valid = false;
+        int stagiu = 0;
         String numeAlegere = "";
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
@@ -60,9 +61,9 @@ public class Alegeri {
         }
         for (Alegeri a : alegeri) {
             if(a.getIdAlegeri().equals(idAlegeri)) {
-                if (stagiu == false) {
+                if (stagiu == 0) {
                     System.out.println("Au pornit alegerile " + numeAlegere);
-                    a.setStagiu(true);
+                    a.setStagiu(1);
                 } else {
                     System.out.println("EROARE: Alegerile deja au inceput");
                 }
