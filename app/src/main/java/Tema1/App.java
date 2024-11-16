@@ -95,6 +95,12 @@ public class App {
             } else if (input.equals("9")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 5)[0];
+                String nume_circumscriptie = comanda.split(" ", 5)[1];
+                String CNP_votant = comanda.split(" ", 5)[2];
+                String CNP_candidat = comanda.split(" ", 5)[3];
+
+                Vot.Votare(alegeri, candidati, votanti, circumscriptii, id_alegeri, nume_circumscriptie,CNP_votant, CNP_candidat);
 
             } else if (input.equals("10")) {
 

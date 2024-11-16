@@ -174,7 +174,7 @@ class Candidat extends Persoana {
 class Votant extends Persoana {
 
     String circumscriptieVotant;
-
+    boolean vot;
     public void setCircumscriptieVotant(String circumscriptieVotant) {
         this.circumscriptieVotant = circumscriptieVotant;
     }
@@ -183,12 +183,21 @@ class Votant extends Persoana {
         return circumscriptieVotant;
     }
 
+    public void setVot(boolean vot) {
+        this.vot = vot;
+    }
+
+    public boolean getVot() {
+        return vot;
+    }
+
     public Votant() {
 
     }
-    public Votant(String cnp, int varsta, String nume, String circumscriptieVotant) {
+    public Votant(String cnp, int varsta, String nume, String circumscriptieVotant, boolean vot) {
         super(cnp, varsta, nume);
         this.circumscriptieVotant = circumscriptieVotant;
+        this.vot = vot;
     }
 
     static void AdaugareVotant (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String cnp, int varsta, boolean indemanare, String nume ) {
@@ -243,7 +252,7 @@ class Votant extends Persoana {
             return;
         }
 
-        Votant votantNou = new Votant(cnp, varsta, nume, numeCircumscriptie);
+        Votant votantNou = new Votant(cnp, varsta, nume, numeCircumscriptie, false);
         votanti.add(votantNou);
         System.out.println("S-a adaugat votantul " + nume);
     }

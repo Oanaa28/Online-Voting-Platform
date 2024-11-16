@@ -70,4 +70,7 @@ public class Alegeri {
             }
         }
     }
+    static void OprireAlegeri (ArrayList<Alegeri> alegeri, String idAlegeri) {
+
+    }
 }

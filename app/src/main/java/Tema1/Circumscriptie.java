@@ -53,7 +53,7 @@ public class Circumscriptie {
     }
     static void EliminareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie) {
 
-        boolean valid = false, existaCircumscriptie = false;
+        boolean valid = false;
         int stagiu = 0;
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
@@ -70,6 +70,7 @@ public class Circumscriptie {
             System.out.println("EROARE: Nu este perioada de votare");
             return;
         }
+        boolean existaCircumscriptie = false;
         Circumscriptie circumscriptieEliminata = null;
         for (Circumscriptie c : circumscriptii) {
             if (c.getNumeCircumscriptie().equals(numeCircumscriptie) == true) {

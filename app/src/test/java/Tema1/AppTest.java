@@ -663,7 +663,7 @@ public class AppTest {
         App app = new App(in);
         app.run();
         String output = outputStreamCaptor.toString().trim();
-            if (output.contains("EROARE: Nu exista o circumscriptie cu numele Bucuresti2")) {
+        if (output.contains("EROARE: Nu exista o circumscriptie cu numele Bucuresti2")) {
             assertTrue(true);
         } else {
             fail(output);
