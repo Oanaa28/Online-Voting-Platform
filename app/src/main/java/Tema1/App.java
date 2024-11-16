@@ -17,7 +17,8 @@ public class App {
         // Implementați aici cerințele din enunț
         // Pentru citirea datelor de la tastatura se folosește câmpul scanner.
         ArrayList<Alegeri> alegeri = new ArrayList<>();
-        ArrayList<Circumscriptie> circumscriptie = new ArrayList<>();
+        ArrayList<Circumscriptie> circumscriptii = new ArrayList<>();
+        ArrayList<Candidat> candidati = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine();
             System.out.println(input);
@@ -39,14 +40,23 @@ public class App {
                 String id_circumscriptie = comanda.split(" ", 3)[0];
                 String nume_circumscriptie = comanda.split(" ", 3)[1];
                 String regiune = comanda.split(" ", 3)[2];
-                Circumscriptie.CreareCircumscriptie(alegeri, circumscriptie, id_circumscriptie, nume_circumscriptie, regiune);
+                Circumscriptie.CreareCircumscriptie(alegeri, circumscriptii, id_circumscriptie, nume_circumscriptie, regiune);
 
             } else if (input.equals("3")) {
 
                 String comanda = scanner.nextLine();
                 String id_alegeri = comanda.split(" ", 2)[0];
                 String nume_circumscriptie = comanda.split(" ", 2)[1];
-                Circumscriptie.EliminareCircumscriptie(alegeri, circumscriptie, id_alegeri, nume_circumscriptie);
+                Circumscriptie.EliminareCircumscriptie(alegeri, circumscriptii, id_alegeri, nume_circumscriptie);
+            } else if (input.equals("4")) {
+
+                String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 4)[0];
+                String cnp = comanda.split(" ", 4)[1];
+                String varsta = comanda.split(" ", 4)[2];
+                String nume = comanda.split(" ", 4)[3];
+                int varstaInt = Integer.parseInt(varsta);
+                Candidat.AdaugareCandidat(candidati, alegeri, id_alegeri, nume, varstaInt, cnp);
             }
         }
     }
