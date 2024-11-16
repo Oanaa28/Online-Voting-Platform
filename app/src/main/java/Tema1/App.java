@@ -56,7 +56,65 @@ public class App {
                 String varsta = comanda.split(" ", 4)[2];
                 String nume = comanda.split(" ", 4)[3];
                 int varstaInt = Integer.parseInt(varsta);
-                Candidat.AdaugareCandidat(candidati, alegeri, id_alegeri, nume, varstaInt, cnp);
+
+                //System.out.println(id_alegeri + "," + nume + "," + cnp + "," + varstaInt);
+
+                Candidat.AdaugareCandidat(candidati, alegeri, id_alegeri, cnp, varstaInt, nume);
+            } else if (input.equals("5")) {
+
+                String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 3)[0];
+                String cnp = comanda.split(" ", 3)[1];
+
+                Candidat.EliminareCandidat(alegeri, candidati, id_alegeri, cnp);
+            } else if (input.equals("6")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("7")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("8")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("9")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("10")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("11")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("12")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("13")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("14")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("15")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("16")) {
+
+                String comanda = scanner.nextLine();
+
+            } else if (input.equals("17")) {
+
+                String comanda = scanner.nextLine();
+
             }
         }
     }
