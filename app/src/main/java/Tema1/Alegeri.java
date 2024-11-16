@@ -71,6 +71,26 @@ public class Alegeri {
         }
     }
     static void OprireAlegeri (ArrayList<Alegeri> alegeri, String idAlegeri) {
-
+        int stagiu = 0, valid = 0;
+        String numeAlegere = "";
+        Alegeri alegere = null;
+        for (Alegeri a : alegeri) {
+            if (a.getIdAlegeri().equals(idAlegeri)) {
+                alegere = a;
+                numeAlegere = a.getNumeAlegeri();
+                valid = 1;
+                stagiu = a.getStagiu();
+            }
+        }
+        if (valid == 0) {
+            System.out.println("EROARE: Nu exista alegeri cu acest id");
+            return;
+        }
+        if (stagiu == 0) {
+            System.out.println("EROARE: Nu este perioada de votare");
+            return;
+        }
+        System.out.println("S-au terminat alegerile " + numeAlegere);
+        alegere.setStagiu(2);
     }
 }

@@ -105,6 +105,8 @@ public class App {
             } else if (input.equals("10")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 1)[0];
+                Alegeri.OprireAlegeri(alegeri, id_alegeri);
 
             } else if (input.equals("11")) {
 
