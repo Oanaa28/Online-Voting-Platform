@@ -23,10 +23,11 @@ public class Circumscriptie {
         this.regiune = regiune;
     }
 
-    static void CreareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String regiune) {
+    static void CreareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, ArrayList<VoturiCircumscriptie> voturiCircumscriptie, String idAlegeri, String numeCircumscriptie, String regiune) {
 
         boolean valid = false;
         int stagiu = 0;
+
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
                 valid = true;
@@ -50,6 +51,8 @@ public class Circumscriptie {
         }
         Circumscriptie circumscriptieNoua = new Circumscriptie(numeCircumscriptie, regiune);
         circumscriptii.add(circumscriptieNoua);
+        VoturiCircumscriptie v = new VoturiCircumscriptie(numeCircumscriptie, 0);
+        voturiCircumscriptie.add(v);
         System.out.println("S-a adaugat circumscriptia " + circumscriptieNoua.getNumeCircumscriptie());
     }
     static void EliminareCircumscriptie(ArrayList<Alegeri> alegeri, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie) {

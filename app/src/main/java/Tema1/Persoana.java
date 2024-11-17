@@ -8,9 +8,9 @@ import java.util.Comparator;
 import java.util.Map;
 
 public abstract class Persoana {
-    String cnp;
-    int varsta;
-    String nume;
+    private String cnp;
+    private int varsta;
+    private String nume;
     protected Persoana() {
 
     }
@@ -40,25 +40,43 @@ public abstract class Persoana {
 }
 
 class Candidat extends Persoana {
-    private Map<String, Integer> voturiPerCircumscriptie;
+    private ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie;
+
     public Candidat() {
 
     }
-    public Candidat(String cnp, int varsta, String nume, Map<String, Integer> voturiPerCircumscriptie) {
-        super(cnp, varsta, nume);
-        this.voturiPerCircumscriptie = voturiPerCircumscriptie;
+    public void setVoturiPerCircumscriptie() {
+        voturiPerCircumscriptie = new ArrayList<>();
     }
-
-    public Map<String, Integer> getVoturiPerCircumscriptie() {
+    public ArrayList getVoturiPerCircumscriptie() {
         return voturiPerCircumscriptie;
     }
-    public void setVoturiPerCircumscriptie(Map<String, Integer> voturiPerCircumscriptie) {
-        this.voturiPerCircumscriptie = voturiPerCircumscriptie;
+
+    public Candidat(String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie) {
+        super(cnp, varsta, nume);
+        this.voturiPerCircumscriptie = new ArrayList<>();
     }
-//    static void VoturiPerCircumscriptie(String numeCircumscriptie, Map<String, Integer> voturiPerCircumscriptie) {
-//
-//    }
-    static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri, String cnp, int varsta, String nume, Map<String, Integer> voturiPerCircumscriptie) {
+
+    public void adaugaVotInCircumscriptie(String numeCircumscriptie) {
+        for (VoturiCircumscriptie v : voturiPerCircumscriptie) {
+            if (v.getNumeCircumscriptie().equals(numeCircumscriptie)) {
+                v.setNumarVoturi(v.getNumarVoturi() + 1);
+                return;
+            }
+        }
+        voturiPerCircumscriptie.add(new VoturiCircumscriptie(numeCircumscriptie, 1));
+    }
+
+    public int getVotDinCircumscriptie(String numeCircumscriptie) {
+        for (VoturiCircumscriptie v : voturiPerCircumscriptie) {
+            if (v.getNumeCircumscriptie().equals(numeCircumscriptie)) {
+                return v.getNumarVoturi();
+            }
+        }
+        return 0;
+    }
+
+    static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri, String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie) {
 
         boolean valid = false;
         int stagiu = 1;

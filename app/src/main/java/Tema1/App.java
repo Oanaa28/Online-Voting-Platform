@@ -20,7 +20,7 @@ public class App {
         ArrayList<Circumscriptie> circumscriptii = new ArrayList<>();
         ArrayList<Candidat> candidati = new ArrayList<>();
         ArrayList<Votant> votanti = new ArrayList<>();
-        Map<String, Integer> voturiPerCircumscriptie = new HashMap<>();
+        ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine();
             System.out.println(input);
@@ -42,7 +42,7 @@ public class App {
                 String id_circumscriptie = comanda.split(" ", 3)[0];
                 String nume_circumscriptie = comanda.split(" ", 3)[1];
                 String regiune = comanda.split(" ", 3)[2];
-                Circumscriptie.CreareCircumscriptie(alegeri, circumscriptii, id_circumscriptie, nume_circumscriptie, regiune);
+                Circumscriptie.CreareCircumscriptie(alegeri, circumscriptii, voturiPerCircumscriptie, id_circumscriptie, nume_circumscriptie, regiune);
 
             } else if (input.equals("3")) {
 
@@ -101,7 +101,7 @@ public class App {
                 String CNP_votant = comanda.split(" ", 5)[2];
                 String CNP_candidat = comanda.split(" ", 5)[3];
 
-                Vot.Votare(alegeri, candidati, votanti, circumscriptii, id_alegeri, nume_circumscriptie,CNP_votant, CNP_candidat);
+                Vot.Votare(alegeri, candidati, votanti, circumscriptii, voturiPerCircumscriptie, id_alegeri, nume_circumscriptie,CNP_votant, CNP_candidat);
 
             } else if (input.equals("10")) {
 
@@ -114,7 +114,7 @@ public class App {
                 String comanda = scanner.nextLine();
                 String id_alegeri = comanda.split(" ", 2)[0];
                 String nume_circumscriptie = comanda.split(" ", 2)[1];
-                Raport.CreeazaRaport(circumscriptii, candidati,alegeri, id_alegeri, nume_circumscriptie);
+                Raport.CreeazaRaport(voturiPerCircumscriptie, circumscriptii, candidati, alegeri, id_alegeri, nume_circumscriptie);
 
             } else if (input.equals("12")) {
 

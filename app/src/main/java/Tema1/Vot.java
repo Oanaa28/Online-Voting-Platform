@@ -40,7 +40,7 @@ public class Vot {
     public void setCnpCandidat(String cnpCandidat) {
         this.cnpCandidat = cnpCandidat;
     }
-    static void Votare(ArrayList<Alegeri> alegeri, ArrayList<Candidat> candidati, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String cnpVotant, String cnpCandidat) {
+    static void Votare(ArrayList<Alegeri> alegeri, ArrayList<Candidat> candidati, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, ArrayList<VoturiCircumscriptie> voturiCircumscriptie, String idAlegeri, String numeCircumscriptie, String cnpVotant, String cnpCandidat) {
         boolean valid = false;
         int stagiu = 0;
         for (Alegeri a : alegeri) {
@@ -120,14 +120,51 @@ public class Vot {
                 }
             }
         }
-        String numeCandidat = "";
+
+        Candidat candidat = null;
         for (Candidat c : candidati) {
             if (c.getCnp().equals(cnpCandidat)) {
-                numeCandidat = c.getNume();
-                //int nrVoturi = c.getVoturiPerCircumscriptie()
+                candidat = c;
                 break;
             }
         }
-        System.out.println(numeVotant + " a votat pentru " + numeCandidat);
+        candidat.adaugaVotInCircumscriptie(numeCircumscriptie);
+
+        for (VoturiCircumscriptie v : voturiCircumscriptie) {
+            if (v.getNumeCircumscriptie().equals(numeCircumscriptie)) {
+                v.adaugaVot();
+                break;
+            }
+        }
+
+        System.out.println(numeVotant + " a votat pentru " + candidat.getNume());
+    }
+}
+
+class VoturiCircumscriptie {
+    private String numeCircumscriptie;
+    private int numarVoturi;
+
+    public VoturiCircumscriptie(String numeCircumscriptie, int numarVoturi) {
+        this.numeCircumscriptie = numeCircumscriptie;
+        this.numarVoturi = numarVoturi;
+    }
+
+    public String getNumeCircumscriptie() {
+        return numeCircumscriptie;
+    }
+
+    public int getNumarVoturi() {
+        return numarVoturi;
+    }
+
+    public void setNumarVoturi(int numarVoturi) {
+        this.numarVoturi = numarVoturi;
+    }
+    public void setNumeCircumscriptie(String numeCircumscriptie) {
+        this.numeCircumscriptie = numeCircumscriptie;
+    }
+    public void adaugaVot() {
+        this.numarVoturi++;
     }
 }

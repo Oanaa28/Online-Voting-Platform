@@ -26,7 +26,7 @@ public class Raport {
     public void setNume_circumscriptie(String nume_circumscriptie) {
         this.nume_circumscriptie = nume_circumscriptie;
     }
-    static void CreeazaRaport(ArrayList<Circumscriptie> circumscriptii, ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String id_alegeri, String nume_circumscriptie) {
+    static void CreeazaRaport(ArrayList<VoturiCircumscriptie> voturiCircumscriptie, ArrayList<Circumscriptie> circumscriptii, ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String id_alegeri, String nume_circumscriptie) {
         int stagiu = 0;
         boolean valid = false;
         for (Alegeri a : alegeri) {
@@ -54,6 +54,22 @@ public class Raport {
         if (!existaCircumscriptie) {
             System.out.println("EROARE: Nu exista o circumscriptie cu numele " + nume_circumscriptie);
             return;
+        }
+        VoturiCircumscriptie voturiInCircumscriptie = null;
+        for (VoturiCircumscriptie v : voturiCircumscriptie) {
+            if (v.getNumeCircumscriptie().equals(nume_circumscriptie)) {
+                voturiInCircumscriptie = v;
+                break;
+            }
+        }
+        if (voturiInCircumscriptie == null || voturiInCircumscriptie.getNumarVoturi() == 0) {
+            System.out.println("GOL: Lumea nu isi exercita dreptul de vot in " + nume_circumscriptie);
+            return;
+        }
+        System.out.println("Raport voturi " + nume_circumscriptie + ":");
+        for (Candidat cand : candidati) {
+            int voturi = cand.getVotDinCircumscriptie(nume_circumscriptie);
+            System.out.println(cand.getNume() + " " + cand.getCnp() + " - " + voturi + " voturi");
         }
     }
 }
