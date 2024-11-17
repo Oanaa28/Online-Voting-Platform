@@ -104,7 +104,7 @@ public class Raport {
             System.out.println("EROARE: Inca nu s-a terminat votarea");
             return;
         }
-//
+
         int voturi = 0;
         boolean gol = true;
         for (Candidat cand : candidati) {

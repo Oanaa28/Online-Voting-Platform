@@ -215,7 +215,7 @@ class Candidat extends Persoana {
 class Votant extends Persoana {
 
     String circumscriptieVotant;
-    boolean vot;
+    boolean vot, frauda;
     public void setCircumscriptieVotant(String circumscriptieVotant) {
         this.circumscriptieVotant = circumscriptieVotant;
     }
@@ -230,6 +230,13 @@ class Votant extends Persoana {
 
     public boolean getVot() {
         return vot;
+    }
+
+    public void setFrauda(boolean frauda) {
+        this.frauda = frauda;
+    }
+    public boolean getFrauda() {
+        return frauda;
     }
 
     public Votant() {
@@ -282,6 +289,7 @@ class Votant extends Persoana {
         boolean existaCNP = false;
         for (Votant v : votanti) {
             if (v.getCnp().equals(cnp)) {
+                v.setCircumscriptieVotant(numeCircumscriptie);
                 existaCNP = true;
                 numeGasit = v.getNume();
                 break;

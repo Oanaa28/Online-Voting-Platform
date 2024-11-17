@@ -116,4 +116,41 @@ public class Analiza {
             System.out.println("in " + nume_circumscriptie + " au fost " + nrVoturiCircumscriptie + " voturi din " + nrVoturiNational + ". Adica " + procentaj +"%. Cele mai multe voturi au fost stranse de " + candidatMaximVoturi.getCnp() + " " + candidatMaximVoturi.getNume() + ". Acestea constituie " + procentajVoturiMaxime + "% din voturile circumscriptiei.");
         }
     }
+    static void AnalizaPePlanNational (ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie, ArrayList<Candidat> candidati, ArrayList<Circumscriptie> circumscriptii, ArrayList<Alegeri> alegeri, String id_alegeri) {
+        int stagiu = 0;
+        boolean valid = false;
+        for (Alegeri a : alegeri) {
+            if (a.getIdAlegeri().equals(id_alegeri)) {
+                stagiu = a.getStagiu();
+                valid = true;
+                break;
+            }
+        }
+        if (!valid) {
+            System.out.println("EROARE: Nu exista alegeri cu acest id");
+            return;
+        }
+        if (stagiu == 0 || stagiu == 1) {
+            System.out.println("EROARE: Inca nu s-a terminat votarea");
+            return;
+        }
+
+        int voturi = 0;
+        boolean gol = true;
+        for (Candidat cand : candidati) {
+            voturi = 0;
+            for (Circumscriptie c : circumscriptii) {
+                voturi += cand.getVotDinCircumscriptie(c.getNumeCircumscriptie());
+            }
+            if (voturi != 0) {
+                gol = false;
+            }
+            cand.setNrVoturi(voturi);
+        }
+        if (gol) {
+            System.out.println("GOL: Lumea nu isi exercita dreptul de vot in Romania");
+            return;
+        }
+        //System.out.println("");
+    }
 }

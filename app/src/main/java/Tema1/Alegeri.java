@@ -93,4 +93,37 @@ public class Alegeri {
         System.out.println("S-au terminat alegerile " + numeAlegere);
         alegere.setStagiu(2);
     }
+    static void StergereAlegeri(ArrayList<Alegeri> alegeri, ArrayList<Candidat> candidati, ArrayList<Circumscriptie> circumscriptii, String idAlegeri) {
+        int valid = 0;
+        Alegeri alegereStergere = null;
+        for (Alegeri a : alegeri) {
+            if (a.getIdAlegeri().equals(idAlegeri)) {
+                valid = 1;
+                alegereStergere = a;
+            }
+        }
+        if (valid == 0) {
+            System.out.println("EROARE: Nu exista alegeri cu acest id");
+            return;
+        }
+        alegeri.remove(alegereStergere);
+        System.out.println("S-au sters alegerile " + alegereStergere.getNumeAlegeri());
+
+        for (Candidat c : candidati) {
+            Candidat.EliminareCandidat(alegeri, candidati, idAlegeri, c.getCnp());
+        }
+        for (Circumscriptie c : circumscriptii) {
+            Circumscriptie.EliminareCircumscriptie(alegeri, circumscriptii, idAlegeri, c.getNumeCircumscriptie());
+        }
+    }
+    static void ListareAlegeri(ArrayList<Alegeri> alegeri) {
+        if (alegeri == null || alegeri.isEmpty()) {
+            System.out.println("GOL: Nu sunt alegeri");
+            return;
+        }
+        System.out.println("Alegeri:");
+        for (Alegeri a : alegeri) {
+            System.out.println(a.getIdAlegeri() + " " + a.getNumeAlegeri());
+        }
+    }
 }

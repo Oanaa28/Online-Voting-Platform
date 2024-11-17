@@ -132,19 +132,24 @@ public class App {
             } else if (input.equals("14")) {
 
                 String comanda = scanner.nextLine();
-
+                String id_alegeri = comanda.split(" ", 1)[0];
+                Analiza.AnalizaPePlanNational(voturiPerCircumscriptie, candidati, circumscriptii, alegeri, id_alegeri);
             } else if (input.equals("15")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 1)[0];
+                Frauda.RapoarteFraude(alegeri, votanti, candidati, circumscriptii, id_alegeri);
 
             } else if (input.equals("16")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 1)[0];
+                Alegeri.StergereAlegeri(alegeri, candidati, circumscriptii, id_alegeri);
 
             } else if (input.equals("17")) {
 
                 String comanda = scanner.nextLine();
-
+                Alegeri.ListareAlegeri(alegeri);
             }
         }
     }

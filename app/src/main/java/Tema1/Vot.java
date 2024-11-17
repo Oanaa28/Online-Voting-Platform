@@ -97,13 +97,16 @@ public class Vot {
         boolean esteInregistrat = false;
         for (Votant v : votanti) {
             if (v.getCnp().equals(cnpVotant) && v.getCircumscriptieVotant().equals(numeCircumscriptie)) {
-//                System.out.println("lalalalla" + v.getCircumscriptieVotant());
-//                System.out.println("lalalalla" + numeCircumscriptie);
                 esteInregistrat = true;
                 break;
             }
         }
         if (!esteInregistrat) {
+            for (Votant v : votanti) {
+                if (v.getCnp().equals(cnpVotant) && !v.getCircumscriptieVotant().equals(numeCircumscriptie)) {
+                    v.setFrauda(true);
+                }
+            }
             System.out.println("FRAUDA: Votantul cu CNP-ul " + cnpVotant + " a incercat sa comita o frauda. Votul a fost anulat");
             return;
         }
@@ -115,6 +118,7 @@ public class Vot {
                     v.setVot(true);
                     break;
                 } else {
+                    v.setFrauda(true);
                     System.out.println("FRAUDa: Votantul cu CNP-ul " + v.getCnp() + " a incercat sa comita o frauda. Votul a fost anulat");
                     return;
                 }
