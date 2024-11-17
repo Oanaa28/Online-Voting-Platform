@@ -1,6 +1,7 @@
 package Tema1;
 
 import org.checkerframework.checker.units.qual.A;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,7 +85,7 @@ public class Analiza {
 
         for (Circumscriptie c : circumscriptii) {
             for (Candidat cand: candidati) {
-                nrVoturiNational += cand.getVotDinCircumscriptie(c.numeCircumscriptie);
+                nrVoturiNational += cand.getVotDinCircumscriptie(c.getNumeCircumscriptie());
             }
         }
         boolean gasitCircumscriptie = false;
@@ -151,6 +152,48 @@ public class Analiza {
             System.out.println("GOL: Lumea nu isi exercita dreptul de vot in Romania");
             return;
         }
-        //System.out.println("");
+        int nrVoturiNational = 0;
+        for (Candidat cand : candidati) {
+            nrVoturiNational += cand.getNrVoturi();
+        }
+        ArrayList<String> regiuni = new ArrayList<>();
+        //Collections.reverse(regiuni);
+
+        System.out.println("in Romania au fost " + nrVoturiNational + " voturi.");
+        regiuni = Circumscriptie.ContorizareRegiuni(circumscriptii);
+        Candidat candidat = null;
+        for (String r : regiuni) {
+            int nrVoturiRegiune = 0, nrMaximVoturiRegiune = 0;
+            for (Candidat cand : candidati) {
+                cand.setNrVoturiPerRegiune(0);
+            }
+            for (Circumscriptie c : circumscriptii) {
+                if (c.getRegiune().equals(r)) {
+                    int nrVoturiCircumscriptie = 0;
+                    String numeCircumscriptie = c.getNumeCircumscriptie();
+                    for (Candidat cand : candidati) {
+                        int nrVoturiCandidat = cand.getVotDinCircumscriptie(numeCircumscriptie);
+
+                        cand.AdaugaVoturiPerRegiune(nrVoturiCandidat);
+
+                        nrVoturiCircumscriptie += nrVoturiCandidat;
+
+                        if (cand.getNrVoturiPerRegiune() >= nrMaximVoturiRegiune) {
+                            nrMaximVoturiRegiune = cand.getNrVoturiPerRegiune();
+                            candidat = cand;
+                        }
+                    }
+                    nrVoturiRegiune += nrVoturiCircumscriptie;
+                }
+            }
+            int procentaj = 0, procentajVoturiMaxime = 0;
+            if (nrVoturiNational != 0) {
+                procentaj = (int) ((float) nrVoturiRegiune * 100 / nrVoturiNational);
+            }
+            if (nrVoturiRegiune != 0) {
+                procentajVoturiMaxime = (int) ((float) nrMaximVoturiRegiune * 100 / nrVoturiRegiune);
+            }
+            System.out.println("in " + r + " au fost " + nrVoturiRegiune + " voturi din " + nrVoturiNational + ". " + "Adica " + procentaj + "%. Cele mai multe voturi au fost stranse de " + candidat.getCnp() + " " + candidat.getNume() + ". Acestea constituie " + procentajVoturiMaxime + "% din voturile regiunii.");
+        }
     }
 }

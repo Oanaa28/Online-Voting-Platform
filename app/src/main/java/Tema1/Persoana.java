@@ -42,6 +42,7 @@ public abstract class Persoana {
 class Candidat extends Persoana {
     private ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie;
     int nrVoturi;
+    int nrVoturiPerRegiune;
     public Candidat() {
 
     }
@@ -58,6 +59,18 @@ class Candidat extends Persoana {
 
     public int getNrVoturi() {
         return nrVoturi;
+    }
+
+    public int getNrVoturiPerRegiune() {
+        return nrVoturiPerRegiune;
+    }
+
+    public void setNrVoturiPerRegiune(int nrVoturiPerRegiune) {
+        this.nrVoturiPerRegiune = nrVoturiPerRegiune;
+    }
+
+    public void AdaugaVoturiPerRegiune(int nrVoturiAdaugate) {
+        this.nrVoturiPerRegiune += nrVoturiAdaugate;
     }
 
     public Candidat(String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie, int nrVoturi) {

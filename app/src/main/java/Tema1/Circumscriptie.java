@@ -89,4 +89,23 @@ public class Circumscriptie {
         circumscriptii.remove(circumscriptieEliminata);
         System.out.println("S-a sters circumscriptia " + numeCircumscriptie);
     }
+
+    static ArrayList<String> ContorizareRegiuni(ArrayList<Circumscriptie> circumscriptii) {
+        ArrayList<String> regiuni = new ArrayList<>();
+        boolean existaRegiune = false;
+        for (Circumscriptie c : circumscriptii) {
+            existaRegiune = false;
+            for (String r : regiuni) {
+                if (r.equals(c.getRegiune())) {
+                    existaRegiune = true;
+                    break;
+                }
+            }
+            if (existaRegiune == false) {
+                regiuni.add(c.getRegiune());
+            }
+        }
+        return regiuni;
+    }
+
 }
