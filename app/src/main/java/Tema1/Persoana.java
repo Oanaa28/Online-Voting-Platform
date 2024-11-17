@@ -41,7 +41,7 @@ public abstract class Persoana {
 
 class Candidat extends Persoana {
     private ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie;
-
+    int nrVoturi;
     public Candidat() {
 
     }
@@ -52,9 +52,18 @@ class Candidat extends Persoana {
         return voturiPerCircumscriptie;
     }
 
-    public Candidat(String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie) {
+    public void setNrVoturi(int nrVoturi) {
+        this.nrVoturi = nrVoturi;
+    }
+
+    public int getNrVoturi() {
+        return nrVoturi;
+    }
+
+    public Candidat(String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie, int nrVoturi) {
         super(cnp, varsta, nume);
         this.voturiPerCircumscriptie = new ArrayList<>();
+        this.nrVoturi = nrVoturi;
     }
 
     public void adaugaVotInCircumscriptie(String numeCircumscriptie) {
@@ -119,7 +128,7 @@ class Candidat extends Persoana {
         }
 
         if (existaCNP == false) {
-            Candidat candidatNou = new Candidat(cnp, varsta, nume, voturiPerCircumscriptie);
+            Candidat candidatNou = new Candidat(cnp, varsta, nume, voturiPerCircumscriptie, 0);
             candidati.add(candidatNou);
             System.out.println("S-a adaugat candidatul " + nume);
         } else {

@@ -114,15 +114,20 @@ public class App {
                 String comanda = scanner.nextLine();
                 String id_alegeri = comanda.split(" ", 2)[0];
                 String nume_circumscriptie = comanda.split(" ", 2)[1];
-                Raport.CreeazaRaport(voturiPerCircumscriptie, circumscriptii, candidati, alegeri, id_alegeri, nume_circumscriptie);
+                Raport.CreeazaRaportPerCircumscriptie(voturiPerCircumscriptie, circumscriptii, candidati, alegeri, id_alegeri, nume_circumscriptie);
 
             } else if (input.equals("12")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 1)[0];
+                Raport.CreeazaRaportNational(voturiPerCircumscriptie, circumscriptii, candidati, alegeri, id_alegeri);
 
             } else if (input.equals("13")) {
 
                 String comanda = scanner.nextLine();
+                String id_alegeri = comanda.split(" ", 2)[0];
+                String nume_circumscriptie = comanda.split(" ", 2)[1];
+                Analiza.AnalizaPerCircumscriptie(voturiPerCircumscriptie, candidati, circumscriptii, alegeri, id_alegeri, nume_circumscriptie);
 
             } else if (input.equals("14")) {
 
