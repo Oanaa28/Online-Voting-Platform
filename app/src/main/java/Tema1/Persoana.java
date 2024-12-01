@@ -1,56 +1,75 @@
 package Tema1;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Map;
 
+/**
+ * Clasa abstracta Persoana contine proprietatile de baza ale unei persoane.
+ * Aceasta e utilizata drept clasa parinte pentru clasele 'Candidat' si 'Votant'.
+ */
 public abstract class Persoana {
-    private String cnp;
-    private int varsta;
-    private String nume;
-    protected Persoana() {
+    private final String cnp; // cod numeric personal
+    private final int varsta; // varsta persoanei
+    private final String nume; // numele persoanei
 
-    }
+    /**
+     * Constructorul cu parametri al clasei
+     * @param cnp CNP-ul persoanei
+     * @param varsta Varsta persoanei
+     * @param nume Numele persoanei
+     */
     public Persoana(String cnp, int varsta, String nume) {
         this.nume = nume;
         this.varsta = varsta;
         this.cnp = cnp;
     }
+
+    /**
+     * Returneaza numele persoanei
+     * @return nume persoana
+     */
     public String getNume() {
         return nume;
     }
-    public void setNume(String nume) {
-        this.nume = nume;
-    }
+
+    /**
+     * Returneaza varsta persoanei.
+     * @return varsta persoana
+     */
     public int getVarsta() {
         return varsta;
     }
-    public void setVarsta(int varsta) {
-        this.varsta = varsta;
-    }
+
+    /**
+     * Returneaza cnp-ul persoanei.
+     * @return cnp persoana
+     */
     public String getCnp() {
         return cnp;
     }
-    public void setCnp(String cnp) {
-        this.cnp = cnp;
-    }
 }
 
+/**
+ * Clasa 'Candidat' extinde clasa 'Persoana' si adauga functionalitati specifice unui candidat,
+ * precum gestionarea voturilor.
+ */
 class Candidat extends Persoana {
-    private ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie;
-    int nrVoturi;
-    int nrVoturiPerRegiune;
-    public Candidat() {
+    private final ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie;
+    int nrVoturi; // numarul total de voturi
+    int nrVoturiPerRegiune; // numarul de voturi pe regiune
 
-    }
-    public void setVoturiPerCircumscriptie() {
-        voturiPerCircumscriptie = new ArrayList<>();
-    }
-    public ArrayList getVoturiPerCircumscriptie() {
-        return voturiPerCircumscriptie;
+    /**
+     * Constructorul cu parametri al clasei Candidat.
+     * @param cnp CNP-ul candidatului
+     * @param varsta Varsta candidatului
+     * @param nume Numele candidatului
+     * @param nrVoturi numarul total de voturi
+     */
+    public Candidat(String cnp, int varsta, String nume, int nrVoturi) {
+        super(cnp, varsta, nume);
+        this.voturiPerCircumscriptie = new ArrayList<>();
+        this.nrVoturi = nrVoturi;
     }
 
     public void setNrVoturi(int nrVoturi) {
@@ -73,12 +92,11 @@ class Candidat extends Persoana {
         this.nrVoturiPerRegiune += nrVoturiAdaugate;
     }
 
-    public Candidat(String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie, int nrVoturi) {
-        super(cnp, varsta, nume);
-        this.voturiPerCircumscriptie = new ArrayList<>();
-        this.nrVoturi = nrVoturi;
-    }
-
+    /**
+     * Adauga un vot in Circumscriptia specificata prin nume.
+     * Daca aceasta nu exista, o creeaza.
+     * @param numeCircumscriptie numele circumscriptiei
+     */
     public void adaugaVotInCircumscriptie(String numeCircumscriptie) {
         for (VoturiCircumscriptie v : voturiPerCircumscriptie) {
             if (v.getNumeCircumscriptie().equals(numeCircumscriptie)) {
@@ -89,6 +107,11 @@ class Candidat extends Persoana {
         voturiPerCircumscriptie.add(new VoturiCircumscriptie(numeCircumscriptie, 1));
     }
 
+    /**
+     * Returneaza numarul de voturi pentru circumscriptia specificata.
+     * @param numeCircumscriptie Numele circumscriptiei
+     * @return numarul de voturi din circumscriptie
+     */
     public int getVotDinCircumscriptie(String numeCircumscriptie) {
         for (VoturiCircumscriptie v : voturiPerCircumscriptie) {
             if (v.getNumeCircumscriptie().equals(numeCircumscriptie)) {
@@ -98,10 +121,21 @@ class Candidat extends Persoana {
         return 0;
     }
 
-    static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri, String cnp, int varsta, String nume, ArrayList<VoturiCircumscriptie> voturiPerCircumscriptie) {
+    /**
+     * Adauga un candidat nou in lista de candidati (implicit si in circumscriptie)
+     * @param candidati Lista de candidati.
+     * @param alegeri Lista de alegeri.
+     * @param idAlegeri ID-ul alegerilor specificate.
+     * @param cnp CNP-ul candidatului ce va fi adaugat.
+     * @param varsta Varsta candidatului.
+     * @param nume Numele candidatului.
+     */
+    static void AdaugareCandidat (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri,
+                                  String idAlegeri, String cnp, int varsta, String nume) {
 
         boolean valid = false;
         int stagiu = 1;
+        // cautare alegeri si veriifcare daca exist
         for (Alegeri a : alegeri) {
             if (a.getIdAlegeri().equals(idAlegeri)) {
                 stagiu = a.getStagiu();
@@ -110,7 +144,7 @@ class Candidat extends Persoana {
             }
         }
 
-        if (valid == false) {
+        if (!valid) {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
@@ -128,11 +162,10 @@ class Candidat extends Persoana {
             System.out.println("EROARE: CNP invalid");
             return;
         }
-
+        // verificare daca exista deja un candidat cu acelasi cnp in lista de candidati
         String numeGasit = "";
         boolean existaCNP = false;
         for (Candidat c : candidati) {
-            //System.out.println("lalal" + c.getCnp() + c.getNume() + c.getVarsta());
             if (c.getCnp().equals(cnp)) {
                 existaCNP = true;
                 numeGasit = c.getNume();
@@ -140,16 +173,26 @@ class Candidat extends Persoana {
             }
         }
 
-        if (existaCNP == false) {
-            Candidat candidatNou = new Candidat(cnp, varsta, nume, voturiPerCircumscriptie, 0);
+        if (!existaCNP) {
+            // aduagam in lista candidatul daca datele lui sunt valide
+            Candidat candidatNou = new Candidat(cnp, varsta, nume, 0);
             candidati.add(candidatNou);
+
             System.out.println("S-a adaugat candidatul " + nume);
         } else {
             System.out.println("EROARE: Candidatul " + numeGasit + " are deja acelasi CNP");
-            return;
         }
     }
-    static void EliminareCandidat (ArrayList<Alegeri> alegeri, ArrayList<Candidat> candidati, String idAlegeri, String cnp) {
+
+    /**
+     * Elimina un candidat din lista de candidati, daca acesta exista deja in lista.
+     * @param alegeri Lista de alegeri.
+     * @param candidati Lista de candidati.
+     * @param idAlegeri ID-ul alegerilor specificate.
+     * @param cnp CNP-ul candidatului ce va fi eliminat.
+     */
+    static void EliminareCandidat (ArrayList<Alegeri> alegeri, ArrayList<Candidat> candidati,
+                                   String idAlegeri, String cnp) {
         boolean valid = false;
         int stagiu = 0;
         for (Alegeri a : alegeri) {
@@ -160,7 +203,7 @@ class Candidat extends Persoana {
             }
         }
 
-        if (valid == false) {
+        if (!valid) {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
@@ -168,10 +211,10 @@ class Candidat extends Persoana {
             System.out.println("EROARE: Nu este perioada de votare");
         }
 
+        // verificare daca exista candidatul cu CNP-ul specificat
         boolean existaCNP = false;
         Candidat candidatEliminat = null;
         for (Candidat c : candidati) {
-            //System.out.println("lalal" + c.getCnp() + c.getNume() + c.getVarsta());
             if (c.getCnp().equals(cnp)) {
                 candidatEliminat = c;
                 existaCNP = true;
@@ -179,15 +222,23 @@ class Candidat extends Persoana {
             }
         }
 
-        if (existaCNP == false) {
+        if (!existaCNP) {
             System.out.println("EROARE: Nu exista un candidat cu CNP-ul " + cnp);
         } else {
+            // eliminare candidat
             candidati.remove(candidatEliminat);
             System.out.println("S-a sters candidatul " + candidatEliminat.getNume());
-            return;
         }
     }
+
+    /**
+     * Listeaza toti candidatii existenti in alegerea specificata, ordonati crescator dupa CNP.
+     * @param candidati Lista de candidati.
+     * @param alegeri Lista alegerilor.
+     * @param idAlegeri ID-ul alegerilor specificate.
+     */
     static void ListareCandidati (ArrayList<Candidat> candidati, ArrayList<Alegeri> alegeri, String idAlegeri) {
+        // validare ID si determinarea stagiului alegerilor
         boolean valid = false;
         int stagiu = 0;
         for (Alegeri a : alegeri) {
@@ -198,7 +249,7 @@ class Candidat extends Persoana {
             }
         }
 
-        if (valid == false) {
+        if (!valid) {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
@@ -212,12 +263,14 @@ class Candidat extends Persoana {
             System.out.println("GOL: Nu sunt candidati");
             return;
         }
-
-        Collections.sort(candidati, new Comparator<Candidat>() {
+        // sortare candidati crescator dupa CNP-ul fiecaruia
+        candidati.sort(new Comparator<Candidat>() {
+            @Override
             public int compare(Candidat c1, Candidat c2) {
                 return c1.getCnp().compareTo(c2.getCnp());
             }
         });
+
         System.out.println("Candidatii:");
         for (Candidat c : candidati) {
             System.out.println(c.getNume() + " " + c.getCnp() + " " + c.getVarsta());
@@ -225,10 +278,31 @@ class Candidat extends Persoana {
     }
 }
 
+/**
+ * Clasa 'Votant' extinde clasa 'Persoana' si adauga functionalitati specifice unui votant,
+ * precum frauda, indemanarea si posibilele fraude comise.
+ * Metodele clasei adauga si listeaza votantii dintr-o circumscriptie specificata.
+ */
 class Votant extends Persoana {
-
     String circumscriptieVotant;
-    boolean vot, frauda;
+    boolean vot, frauda, neindemanatic;
+
+    /**
+     * Constructorul cu parametri al clasei 'Votant'.
+     * @param cnp CNP-ul votantului
+     * @param varsta Varsta votantului
+     * @param nume Numele votantului
+     * @param circumscriptieVotant Circumscriptia unde va vota
+     * @param neindemanatic (da/nu)
+     * @param vot (da/nu)
+     */
+    public Votant(String cnp, int varsta, String nume, String circumscriptieVotant, boolean neindemanatic, boolean vot) {
+        super(cnp, varsta, nume);
+        this.circumscriptieVotant = circumscriptieVotant;
+        this.neindemanatic = neindemanatic;
+        this.vot = vot;
+    }
+
     public void setCircumscriptieVotant(String circumscriptieVotant) {
         this.circumscriptieVotant = circumscriptieVotant;
     }
@@ -252,16 +326,27 @@ class Votant extends Persoana {
         return frauda;
     }
 
-    public Votant() {
-
-    }
-    public Votant(String cnp, int varsta, String nume, String circumscriptieVotant, boolean vot) {
-        super(cnp, varsta, nume);
-        this.circumscriptieVotant = circumscriptieVotant;
-        this.vot = vot;
+    public boolean getNeindemanatic() {
+        return neindemanatic;
     }
 
-    static void AdaugareVotant (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie, String cnp, int varsta, boolean indemanare, String nume ) {
+    /**
+     * Adauga un votant im lista votantilor, dupa ce verifica validitatea datelor si a circumscriptiei.
+     * @param alegeri Lista alegerilor.
+     * @param votanti Lista votantilor existenti.
+     * @param circumscriptii Lista circumscriptiilor.
+     * @param idAlegeri ID-ul alegerilor unde participa votantul.
+     * @param numeCircumscriptie Numele circumscriptiei unde va vota.
+     * @param cnp CNP-ul votantului
+     * @param varsta Varsta votantului
+     * @param neindemanatic Indemanarea votantului
+     * @param nume Numele votantului
+     */
+    static void AdaugareVotant (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti,
+                                ArrayList<Circumscriptie> circumscriptii, String idAlegeri,
+                                String numeCircumscriptie, String cnp, int varsta,
+                                boolean neindemanatic, String nume ) {
+        // validare ID si determinarea stagiului alegerilor
         boolean valid = false;
         int stagiu = 0;
         for (Alegeri a : alegeri) {
@@ -271,13 +356,14 @@ class Votant extends Persoana {
                 break;
             }
         }
-        if (valid == false) {
+        if (!valid) {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
         if (stagiu == 0) {
             System.out.println("EROARE: Nu este perioada de votare");
         }
+        // verificare daca exista cirxumscriptia specificata
         boolean existaCircumscriptie = false;
         for (Circumscriptie c : circumscriptii) {
             if (c.getNumeCircumscriptie().equals(numeCircumscriptie)) {
@@ -285,7 +371,7 @@ class Votant extends Persoana {
                 break;
             }
         }
-        if (existaCircumscriptie == false) {
+        if (!existaCircumscriptie) {
             System.out.println("EROARE: Nu exista o circumscriptie cu numele " + numeCircumscriptie);
             return;
         }
@@ -297,7 +383,7 @@ class Votant extends Persoana {
             System.out.println("EROARE: CNP invalid");
             return;
         }
-
+        // verificare daca exista deja un alt votant cu acelasi CNP
         String numeGasit = "";
         boolean existaCNP = false;
         for (Votant v : votanti) {
@@ -309,16 +395,28 @@ class Votant extends Persoana {
             }
         }
 
-        if (existaCNP == true) {
+        if (existaCNP) {
             System.out.println("EROARE: Votantul " + numeGasit + " are deja acelasi CNP");
             return;
         }
-
-        Votant votantNou = new Votant(cnp, varsta, nume, numeCircumscriptie, false);
+        // creare si adaugare votant in lista de votanti daca a trecut de toat verificarile
+        Votant votantNou = new Votant(cnp, varsta, nume, numeCircumscriptie, neindemanatic, false);
         votanti.add(votantNou);
         System.out.println("S-a adaugat votantul " + nume);
     }
-    static void ListareVotantiCircumscriptie (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti, ArrayList<Circumscriptie> circumscriptii, String idAlegeri, String numeCircumscriptie) {
+
+    /**
+     * Listeaza toti votantii din circumscriptia specificata prin numeCircumscriptie
+     * @param alegeri Lista de alegeri
+     * @param votanti Lista de votanti
+     * @param circumscriptii Lista de circumscriptii
+     * @param idAlegeri ID-ul alegerilor
+     * @param numeCircumscriptie Numele circumscriptiiei specificate.
+     */
+    static void ListareVotantiCircumscriptie (ArrayList<Alegeri> alegeri, ArrayList<Votant> votanti,
+                                              ArrayList<Circumscriptie> circumscriptii,
+                                              String idAlegeri, String numeCircumscriptie) {
+        // verificare validitate id si determinare a stagiului curent
         boolean valid = false;
         int stagiu = 0;
         for (Alegeri a : alegeri) {
@@ -329,7 +427,7 @@ class Votant extends Persoana {
             }
         }
 
-        if (valid == false) {
+        if (!valid) {
             System.out.println("EROARE: Nu exista alegeri cu acest id");
             return;
         }
@@ -338,18 +436,21 @@ class Votant extends Persoana {
             System.out.println("EROARE: Inca nu au inceput alegerile");
             return;
         }
+        // verificare daca exista circumscriptia specificata in lista de circumscriptii
         boolean existaCircumscriptie = false;
         for (Circumscriptie c : circumscriptii) {
             if(c.getNumeCircumscriptie().equals(numeCircumscriptie)) {
                 existaCircumscriptie = true;
+                break;
             }
         }
-        if (existaCircumscriptie == false) {
+
+        if (!existaCircumscriptie) {
             System.out.println("EROARE: Nu exista o circumscriptie cu numele " + numeCircumscriptie);
             return;
         }
-
-        ArrayList<Votant> votantiCircumscriptie = new ArrayList<Votant>();
+        // creare lista cu votantii din circumscriptie
+        ArrayList<Votant> votantiCircumscriptie = new ArrayList<>();
 
         boolean existaVotanti = false;
 
@@ -360,16 +461,17 @@ class Votant extends Persoana {
             }
         }
 
-        if (existaVotanti == false) {
+        if (!existaVotanti) {
             System.out.println("GOL: Nu sunt votanti in " + numeCircumscriptie);
             return;
         }
-
+        // sortarea votantilor din lista creata in ordine crescatoare dupa CNP
         Collections.sort(votantiCircumscriptie, new Comparator<Votant>() {
             public int compare(Votant v1, Votant v2) {
                 return v1.getCnp().compareTo(v2.getCnp());
             }
         });
+        // afisare a votantilor si a detaliilor acestora
         System.out.println("Votantii din " + numeCircumscriptie + ":");
         for (Votant v : votantiCircumscriptie) {
             System.out.println(v.getNume() + " " + v.getCnp() + " " + v.getVarsta());
