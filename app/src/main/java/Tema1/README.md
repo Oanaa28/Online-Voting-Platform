@@ -183,4 +183,27 @@ parcurge votantii si cuata fraudele.
 * Daca nu exista, afiseaza un mesaj, iar daca exista le obtine pentru fiecare votant si le afiseaza detaliat.
 
 
+#### Cazuri in plus de tratat
+- Circumsccriptii in care nu exista votanti: in cadrul votarii, daca in circumscriptie
+nu este inscris niciun candidat, afisam un mesaj corespunzator.
+  - mesaj: 'Nu exista votanti in circumscriptia X.'
+- Persoanele care sunt inscrise intr-o alta circumscriptie decat in cea in care incearca sa voteze.
+Acestea sa poata vota, votantul fiind marcat ca votant special si tratat ca facand parte din circumscriptia unde a votat.
+  - conditie suplimentara: In acest caz se va face o verificare suplimentara, ca votantul sa nu fi votat si in circumscriptia lui.
+  - mesaj: 'Votul cu CNP-ul X a fost inregistrat ca votant special in circumscriptia Y.'
 
+- Voturile provenite din afara tarii sa fie si ele contorizate, separat.
+  - implementare: se poate folosi o circumscriptie speciala numita 'Diaspora'
+  - mesaj: 'Au fost inregistrate N voturi din afara tarii si au fost incluse in raportul national.'
+
+#### Refactorizare comenzi si raspunsuri
+
+- adaugarea unor comenzi pentru raport/analiza per regiune
+- aduagarea unei comenzi de cautare candidat dupa cnp
+- gruparea comenzilor in categorii, dupa tipul lor
+  - alegeri
+  - circumscriptii
+  - candidati si votanti
+  - analiza 
+  - raport
+  - votare
