@@ -226,6 +226,9 @@ class Candidat extends Persoana {
             System.out.println("EROARE: Nu exista un candidat cu CNP-ul " + cnp);
         } else {
             // eliminare candidat
+            candidatEliminat.nrVoturi = 0;
+            candidatEliminat.nrVoturiPerRegiune = 0;
+            candidatEliminat.voturiPerCircumscriptie.remove(candidatEliminat);
             candidati.remove(candidatEliminat);
             System.out.println("S-a sters candidatul " + candidatEliminat.getNume());
         }
